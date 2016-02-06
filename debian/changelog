@@ -1,3 +1,33 @@
+tmux (2.1-3) unstable; urgency=medium
+
+  * Cherry-pick fixes from upstream Git:
+    + 374e273df5: make paste detection trigger after two characters
+    + 933929cd62: fix a memory leak in if-shell -F
+
+ -- Romain Francoise <rfrancoise@debian.org>  Sat, 21 Nov 2015 19:47:32 +0100
+
+tmux (2.1-2) unstable; urgency=medium
+
+  * Cherry-pick fixes from upstream Git:
+    + 8c8cddbe02: don't cache key table when looking up keys (closes: #803393)
+    + ddbc4a0f6c: add back default binding for mouse wheel up
+    + a05c27a7e1: unzoom before select-pane -LRUD
+    + 2e2b8a95bd: skip mouse sequences when looking for pastes
+    + 3faa51a0ca: pass output from jobs through format_expand() again
+    + 380a1ea8ef: add back bindings to change window with mouse wheel on
+      status line
+    + 640c6fdd5f: pass mouse events to the correct pane
+    + 3fc001d0a2: scroll the correct pane from mouse bindings
+    + 5577535891: pass through right click to the application
+
+ -- Romain Francoise <rfrancoise@debian.org>  Thu, 05 Nov 2015 18:53:44 +0100
+
+tmux (2.1-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Romain Francoise <rfrancoise@debian.org>  Sun, 18 Oct 2015 20:06:36 +0200
+
 tmux (2.1~git20151017-1) experimental; urgency=medium
 
   * New upstream snapshot, from Git commit a204595e4c.
