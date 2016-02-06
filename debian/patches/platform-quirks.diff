@@ -38,7 +38,7 @@ Forwarded: not-needed
  
 --- a/compat.h
 +++ b/compat.h
-@@ -185,6 +185,22 @@
+@@ -188,6 +188,22 @@
  #define flock(fd, op) (0)
  #endif
  
