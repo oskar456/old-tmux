@@ -121,7 +121,7 @@ bin_PROGRAMS = tmux$(EXEEXT)
 # Set flags for Sun CC.
 @IS_SUNCC_TRUE@am__append_10 = -erroff=E_EMPTY_DECLARATION
 
-# Set _LINUX_SOURCE_COMPAT for AIX for mallocing 0 bytes
+# Set _LINUX_SOURCE_COMPAT for AIX for malloc(0).
 @IS_AIX_TRUE@am__append_11 = -D_LINUX_SOURCE_COMPAT=1
 
 # Pile in all the compat/ stuff that is needed.
