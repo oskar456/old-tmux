@@ -1,6 +1,7 @@
 tmux (2.2~git20160406-1) experimental; urgency=medium
 
   * New upstream snapshot, from Git commit ad2532c3f4.
+  * Bump Standards-Version to 3.9.7.
 
  -- Romain Francoise <rfrancoise@debian.org>  Wed, 06 Apr 2016 19:34:28 +0200
 
