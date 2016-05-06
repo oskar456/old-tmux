@@ -62,15 +62,8 @@ struct tmuxproc;
 /* Automatic name refresh interval, in microseconds. Must be < 1 second. */
 #define NAME_INTERVAL 500000
 
-/*
- * READ_SIZE is the maximum size of data to hold from a pty (the event high
- * watermark). READ_BACKOFF is the amount of data waiting to be output to a tty
- * before pty reads will be backed off. READ_TIME is how long to back off
- * before the next read (in microseconds) if a tty is above READ_BACKOFF.
- */
-#define READ_SIZE 1024
-#define READ_BACKOFF 512
-#define READ_TIME 100
+/* The maximum amount of data to hold from a pty (the event high watermark). */
+#define READ_SIZE 128
 
 /* Attribute to make gcc check printf-like arguments. */
 #define printflike(a, b) __attribute__ ((format (printf, a, b)))
@@ -538,12 +531,14 @@ enum mode_key_cmd {
 	MODEKEYCOPY_LEFT,
 	MODEKEYCOPY_MIDDLELINE,
 	MODEKEYCOPY_NEXTPAGE,
+	MODEKEYCOPY_NEXTPARAGRAPH,
 	MODEKEYCOPY_NEXTSPACE,
 	MODEKEYCOPY_NEXTSPACEEND,
 	MODEKEYCOPY_NEXTWORD,
 	MODEKEYCOPY_NEXTWORDEND,
 	MODEKEYCOPY_OTHEREND,
 	MODEKEYCOPY_PREVIOUSPAGE,
+	MODEKEYCOPY_PREVIOUSPARAGRAPH,
 	MODEKEYCOPY_PREVIOUSSPACE,
 	MODEKEYCOPY_PREVIOUSWORD,
 	MODEKEYCOPY_RECTANGLETOGGLE,
@@ -889,7 +884,6 @@ struct window_pane {
 
 	int		 fd;
 	struct bufferevent *event;
-	struct event	 timer;
 
 	struct input_ctx *ictx;
 
@@ -901,6 +895,9 @@ struct window_pane {
 
 	struct screen	*screen;
 	struct screen	 base;
+
+	struct screen	 status_screen;
+	size_t		 status_size;
 
 	/* Saved in alternative screen mode. */
 	u_int		 saved_cx;
@@ -1730,7 +1727,6 @@ void	tty_close(struct tty *);
 void	tty_free(struct tty *);
 void	tty_write(void (*)(struct tty *, const struct tty_ctx *),
 	    struct tty_ctx *);
-int	tty_client_ready(struct client *, struct window_pane *wp);
 void	tty_cmd_alignmenttest(struct tty *, const struct tty_ctx *);
 void	tty_cmd_cell(struct tty *, const struct tty_ctx *);
 void	tty_cmd_clearendofline(struct tty *, const struct tty_ctx *);
@@ -2034,15 +2030,15 @@ void	 screen_write_stop(struct screen_write_ctx *);
 void	 screen_write_reset(struct screen_write_ctx *);
 size_t printflike(1, 2) screen_write_cstrlen(const char *, ...);
 void printflike(4, 5) screen_write_cnputs(struct screen_write_ctx *,
-	     ssize_t, struct grid_cell *, const char *, ...);
+	     ssize_t, const struct grid_cell *, const char *, ...);
 size_t printflike(1, 2) screen_write_strlen(const char *, ...);
 void printflike(3, 4) screen_write_puts(struct screen_write_ctx *,
-	     struct grid_cell *, const char *, ...);
+	     const struct grid_cell *, const char *, ...);
 void printflike(4, 5) screen_write_nputs(struct screen_write_ctx *,
-	     ssize_t, struct grid_cell *, const char *, ...);
+	     ssize_t, const struct grid_cell *, const char *, ...);
 void	 screen_write_vnputs(struct screen_write_ctx *, ssize_t,
-	     struct grid_cell *, const char *, va_list);
-void	 screen_write_putc(struct screen_write_ctx *, struct grid_cell *,
+	     const struct grid_cell *, const char *, va_list);
+void	 screen_write_putc(struct screen_write_ctx *, const struct grid_cell *,
 	     u_char);
 void	 screen_write_copy(struct screen_write_ctx *, struct screen *, u_int,
 	     u_int, u_int, u_int);
@@ -2225,7 +2221,7 @@ void		 window_copy_init_from_pane(struct window_pane *, int);
 void		 window_copy_init_for_output(struct window_pane *);
 void printflike(2, 3) window_copy_add(struct window_pane *, const char *, ...);
 void		 window_copy_vadd(struct window_pane *, const char *, va_list);
-void		 window_copy_pageup(struct window_pane *);
+void		 window_copy_pageup(struct window_pane *, int);
 void		 window_copy_start_drag(struct client *, struct mouse_event *);
 int		 window_copy_scroll_position(struct window_pane *);
 

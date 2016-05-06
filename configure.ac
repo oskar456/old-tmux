@@ -1,6 +1,6 @@
 # configure.ac
 
-AC_INIT(tmux, 2.2)
+AC_INIT(tmux, 2.3)
 
 AC_CONFIG_AUX_DIR(etc)
 AM_INIT_AUTOMAKE([foreign subdir-objects])
@@ -48,7 +48,7 @@ AC_ARG_ENABLE(
 )
 if test "x$found_static" = xyes; then
 	LDFLAGS="$LDFLAGS -static"
-	PKG_CONFIG="pkg-config --static"
+	test "x$PKG_CONFIG" != x && PKG_CONFIG="$PKG_CONFIG --static"
 fi
 
 # Is this gcc?
