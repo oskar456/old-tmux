@@ -1,3 +1,9 @@
+tmux (2.3~git20160529-1) experimental; urgency=medium
+
+  * New upstream snapshot, from Git commit 7a2fed494b.
+
+ -- Romain Francoise <rfrancoise@debian.org>  Sun, 29 May 2016 19:42:51 +0200
+
 tmux (2.3~git20160512-1) experimental; urgency=medium
 
   * New upstream snapshot, from Git commit 6cb74f4b7d (closes: #823527).
