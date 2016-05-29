@@ -99,8 +99,7 @@ bin_PROGRAMS = tmux$(EXEEXT)
 # Set flags for gcc.
 @IS_GCC_TRUE@am__append_2 = -std=gnu99 -O2
 @IS_DEBUG_TRUE@@IS_GCC_TRUE@am__append_3 = -g -Wno-long-long -Wall -W \
-@IS_DEBUG_TRUE@@IS_GCC_TRUE@	-Wnested-externs -Wformat=2 \
-@IS_DEBUG_TRUE@@IS_GCC_TRUE@	-Wmissing-prototypes \
+@IS_DEBUG_TRUE@@IS_GCC_TRUE@	-Wformat=2 -Wmissing-prototypes \
 @IS_DEBUG_TRUE@@IS_GCC_TRUE@	-Wstrict-prototypes \
 @IS_DEBUG_TRUE@@IS_GCC_TRUE@	-Wmissing-declarations \
 @IS_DEBUG_TRUE@@IS_GCC_TRUE@	-Wwrite-strings -Wshadow \
@@ -112,38 +111,42 @@ bin_PROGRAMS = tmux$(EXEEXT)
 @IS_DEBUG_TRUE@@IS_GCC_TRUE@am__append_4 = -DDEBUG
 @IS_COVERAGE_TRUE@@IS_GCC_TRUE@am__append_5 = -g -O0 --coverage
 @IS_COVERAGE_TRUE@@IS_GCC_TRUE@am__append_6 = --coverage
-@IS_GCC_TRUE@am__append_7 = -iquote.
+@IS_GCC_TRUE@@IS_PROFILE_TRUE@am__append_7 = -g -O0 -pg
+@IS_GCC_TRUE@@IS_PROFILE_TRUE@am__append_8 = -pg
+@IS_GCC_TRUE@am__append_9 = -iquote.
 
 # Set flags for Solaris.
-@IS_GCC_TRUE@@IS_SUNOS_TRUE@am__append_8 = -D_XPG6 -D__EXTENSIONS__ -D_POSIX_PTHREAD_SEMANTICS
-@IS_GCC_FALSE@@IS_SUNOS_TRUE@am__append_9 = -D_XPG4_2 -D__EXTENSIONS__ -D_POSIX_PTHREAD_SEMANTICS
+@IS_GCC_TRUE@@IS_SUNOS_TRUE@am__append_10 = -D_XPG6 -D__EXTENSIONS__ -D_POSIX_PTHREAD_SEMANTICS
+@IS_GCC_FALSE@@IS_SUNOS_TRUE@am__append_11 = -D_XPG4_2 -D__EXTENSIONS__ -D_POSIX_PTHREAD_SEMANTICS
 
 # Set flags for Sun CC.
-@IS_SUNCC_TRUE@am__append_10 = -erroff=E_EMPTY_DECLARATION
+@IS_SUNCC_TRUE@am__append_12 = -erroff=E_EMPTY_DECLARATION
 
 # Set _LINUX_SOURCE_COMPAT for AIX for malloc(0).
-@IS_AIX_TRUE@am__append_11 = -D_LINUX_SOURCE_COMPAT=1
+@IS_AIX_TRUE@am__append_13 = -D_LINUX_SOURCE_COMPAT=1
 
 # Pile in all the compat/ stuff that is needed.
-@NO_FORKPTY_TRUE@am__append_12 = compat/forkpty-@PLATFORM@.c
-@NO_IMSG_TRUE@am__append_13 = compat/imsg.c compat/imsg-buffer.c
-@NO_CLOSEFROM_TRUE@am__append_14 = compat/closefrom.c
-@NO_DAEMON_TRUE@am__append_15 = compat/daemon.c
-@NO_SETENV_TRUE@am__append_16 = compat/setenv.c
-@NO_STRLCAT_TRUE@am__append_17 = compat/strlcat.c
-@NO_STRLCPY_TRUE@am__append_18 = compat/strlcpy.c
-@NO_ASPRINTF_TRUE@am__append_19 = compat/asprintf.c
-@NO_FGETLN_TRUE@am__append_20 = compat/fgetln.c
-@NO_FPARSELN_TRUE@am__append_21 = compat/fparseln.c
-@NO_GETOPT_TRUE@am__append_22 = compat/getopt.c
-@NO_STRCASESTR_TRUE@am__append_23 = compat/strcasestr.c
-@NO_STRSEP_TRUE@am__append_24 = compat/strsep.c
-@NO_VIS_TRUE@am__append_25 = compat/vis.c compat/unvis.c
-@NO_STRTONUM_TRUE@am__append_26 = compat/strtonum.c
-@NO_B64_NTOP_TRUE@am__append_27 = compat/b64_ntop.c
-@NO_CFMAKERAW_TRUE@am__append_28 = compat/cfmakeraw.c
-@NO_OPENAT_TRUE@am__append_29 = compat/openat.c
-@NO_REALLOCARRAY_TRUE@am__append_30 = compat/reallocarray.c
+@NO_FORKPTY_TRUE@am__append_14 = compat/forkpty-@PLATFORM@.c
+@NO_IMSG_TRUE@am__append_15 = compat/imsg.c compat/imsg-buffer.c
+@NO_CLOSEFROM_TRUE@am__append_16 = compat/closefrom.c
+@NO_DAEMON_TRUE@am__append_17 = compat/daemon.c compat/daemon.c
+@NO_GETPROGNAME_TRUE@am__append_18 = compat/getprogname.c
+@NO_SETPROCTITLE_TRUE@am__append_19 = compat/setproctitle.c
+@NO_SETENV_TRUE@am__append_20 = compat/setenv.c
+@NO_STRLCAT_TRUE@am__append_21 = compat/strlcat.c
+@NO_STRLCPY_TRUE@am__append_22 = compat/strlcpy.c
+@NO_ASPRINTF_TRUE@am__append_23 = compat/asprintf.c
+@NO_FGETLN_TRUE@am__append_24 = compat/fgetln.c
+@NO_FPARSELN_TRUE@am__append_25 = compat/fparseln.c
+@NO_GETOPT_TRUE@am__append_26 = compat/getopt.c
+@NO_STRCASESTR_TRUE@am__append_27 = compat/strcasestr.c
+@NO_STRSEP_TRUE@am__append_28 = compat/strsep.c
+@NO_VIS_TRUE@am__append_29 = compat/vis.c compat/unvis.c
+@NO_STRTONUM_TRUE@am__append_30 = compat/strtonum.c
+@NO_B64_NTOP_TRUE@am__append_31 = compat/b64_ntop.c
+@NO_CFMAKERAW_TRUE@am__append_32 = compat/cfmakeraw.c
+@NO_OPENAT_TRUE@am__append_33 = compat/openat.c
+@NO_REALLOCARRAY_TRUE@am__append_34 = compat/reallocarray.c
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -214,30 +217,34 @@ am__dirstamp = $(am__leading_dot)dirstamp
 @NO_IMSG_TRUE@am__objects_2 = compat/imsg.$(OBJEXT) \
 @NO_IMSG_TRUE@	compat/imsg-buffer.$(OBJEXT)
 @NO_CLOSEFROM_TRUE@am__objects_3 = compat/closefrom.$(OBJEXT)
-@NO_DAEMON_TRUE@am__objects_4 = compat/daemon.$(OBJEXT)
-@NO_SETENV_TRUE@am__objects_5 = compat/setenv.$(OBJEXT)
-@NO_STRLCAT_TRUE@am__objects_6 = compat/strlcat.$(OBJEXT)
-@NO_STRLCPY_TRUE@am__objects_7 = compat/strlcpy.$(OBJEXT)
-@NO_ASPRINTF_TRUE@am__objects_8 = compat/asprintf.$(OBJEXT)
-@NO_FGETLN_TRUE@am__objects_9 = compat/fgetln.$(OBJEXT)
-@NO_FPARSELN_TRUE@am__objects_10 = compat/fparseln.$(OBJEXT)
-@NO_GETOPT_TRUE@am__objects_11 = compat/getopt.$(OBJEXT)
-@NO_STRCASESTR_TRUE@am__objects_12 = compat/strcasestr.$(OBJEXT)
-@NO_STRSEP_TRUE@am__objects_13 = compat/strsep.$(OBJEXT)
-@NO_VIS_TRUE@am__objects_14 = compat/vis.$(OBJEXT) \
+@NO_DAEMON_TRUE@am__objects_4 = compat/daemon.$(OBJEXT) \
+@NO_DAEMON_TRUE@	compat/daemon.$(OBJEXT)
+@NO_GETPROGNAME_TRUE@am__objects_5 = compat/getprogname.$(OBJEXT)
+@NO_SETPROCTITLE_TRUE@am__objects_6 = compat/setproctitle.$(OBJEXT)
+@NO_SETENV_TRUE@am__objects_7 = compat/setenv.$(OBJEXT)
+@NO_STRLCAT_TRUE@am__objects_8 = compat/strlcat.$(OBJEXT)
+@NO_STRLCPY_TRUE@am__objects_9 = compat/strlcpy.$(OBJEXT)
+@NO_ASPRINTF_TRUE@am__objects_10 = compat/asprintf.$(OBJEXT)
+@NO_FGETLN_TRUE@am__objects_11 = compat/fgetln.$(OBJEXT)
+@NO_FPARSELN_TRUE@am__objects_12 = compat/fparseln.$(OBJEXT)
+@NO_GETOPT_TRUE@am__objects_13 = compat/getopt.$(OBJEXT)
+@NO_STRCASESTR_TRUE@am__objects_14 = compat/strcasestr.$(OBJEXT)
+@NO_STRSEP_TRUE@am__objects_15 = compat/strsep.$(OBJEXT)
+@NO_VIS_TRUE@am__objects_16 = compat/vis.$(OBJEXT) \
 @NO_VIS_TRUE@	compat/unvis.$(OBJEXT)
-@NO_STRTONUM_TRUE@am__objects_15 = compat/strtonum.$(OBJEXT)
-@NO_B64_NTOP_TRUE@am__objects_16 = compat/b64_ntop.$(OBJEXT)
-@NO_CFMAKERAW_TRUE@am__objects_17 = compat/cfmakeraw.$(OBJEXT)
-@NO_OPENAT_TRUE@am__objects_18 = compat/openat.$(OBJEXT)
-@NO_REALLOCARRAY_TRUE@am__objects_19 = compat/reallocarray.$(OBJEXT)
+@NO_STRTONUM_TRUE@am__objects_17 = compat/strtonum.$(OBJEXT)
+@NO_B64_NTOP_TRUE@am__objects_18 = compat/b64_ntop.$(OBJEXT)
+@NO_CFMAKERAW_TRUE@am__objects_19 = compat/cfmakeraw.$(OBJEXT)
+@NO_OPENAT_TRUE@am__objects_20 = compat/openat.$(OBJEXT)
+@NO_REALLOCARRAY_TRUE@am__objects_21 = compat/reallocarray.$(OBJEXT)
 nodist_tmux_OBJECTS = osdep-@PLATFORM@.$(OBJEXT) $(am__objects_1) \
 	$(am__objects_2) $(am__objects_3) $(am__objects_4) \
 	$(am__objects_5) $(am__objects_6) $(am__objects_7) \
 	$(am__objects_8) $(am__objects_9) $(am__objects_10) \
 	$(am__objects_11) $(am__objects_12) $(am__objects_13) \
 	$(am__objects_14) $(am__objects_15) $(am__objects_16) \
-	$(am__objects_17) $(am__objects_18) $(am__objects_19)
+	$(am__objects_17) $(am__objects_18) $(am__objects_19) \
+	$(am__objects_20) $(am__objects_21)
 tmux_OBJECTS = $(dist_tmux_OBJECTS) $(nodist_tmux_OBJECTS)
 tmux_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -329,15 +336,15 @@ AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@ $(am__append_1) $(am__append_2) $(am__append_3) \
-	$(am__append_5) $(am__append_10)
+	$(am__append_5) $(am__append_7) $(am__append_12)
 CPP = @CPP@
 
 # Preprocessor flags.
 CPPFLAGS = @CPPFLAGS@ @XOPEN_DEFINES@ \
 	-DTMUX_CONF="\"$(sysconfdir)/tmux.conf\"" $(am__append_4) \
-	$(am__append_7) $(am__append_8) $(am__append_9)
+	$(am__append_9) $(am__append_10) $(am__append_11)
 CYGPATH_W = @CYGPATH_W@
-DEFS = @DEFS@ $(am__append_11)
+DEFS = @DEFS@ $(am__append_13)
 DEPDIR = @DEPDIR@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
@@ -350,7 +357,7 @@ INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
-LDFLAGS = @LDFLAGS@ $(am__append_6)
+LDFLAGS = @LDFLAGS@ $(am__append_6) $(am__append_8)
 LIBEVENT_CFLAGS = @LIBEVENT_CFLAGS@
 LIBEVENT_LIBS = @LIBEVENT_LIBS@
 LIBNCURSES_CFLAGS = @LIBNCURSES_CFLAGS@
@@ -559,13 +566,14 @@ dist_tmux_SOURCES = \
 	xmalloc.c \
 	xterm-keys.c
 
-nodist_tmux_SOURCES = osdep-@PLATFORM@.c $(am__append_12) \
-	$(am__append_13) $(am__append_14) $(am__append_15) \
-	$(am__append_16) $(am__append_17) $(am__append_18) \
-	$(am__append_19) $(am__append_20) $(am__append_21) \
-	$(am__append_22) $(am__append_23) $(am__append_24) \
-	$(am__append_25) $(am__append_26) $(am__append_27) \
-	$(am__append_28) $(am__append_29) $(am__append_30)
+nodist_tmux_SOURCES = osdep-@PLATFORM@.c $(am__append_14) \
+	$(am__append_15) $(am__append_16) $(am__append_17) \
+	$(am__append_18) $(am__append_19) $(am__append_20) \
+	$(am__append_21) $(am__append_22) $(am__append_23) \
+	$(am__append_24) $(am__append_25) $(am__append_26) \
+	$(am__append_27) $(am__append_28) $(am__append_29) \
+	$(am__append_30) $(am__append_31) $(am__append_32) \
+	$(am__append_33) $(am__append_34)
 all: all-am
 
 .SUFFIXES:
@@ -660,6 +668,10 @@ compat/imsg-buffer.$(OBJEXT): compat/$(am__dirstamp) \
 compat/closefrom.$(OBJEXT): compat/$(am__dirstamp) \
 	compat/$(DEPDIR)/$(am__dirstamp)
 compat/daemon.$(OBJEXT): compat/$(am__dirstamp) \
+	compat/$(DEPDIR)/$(am__dirstamp)
+compat/getprogname.$(OBJEXT): compat/$(am__dirstamp) \
+	compat/$(DEPDIR)/$(am__dirstamp)
+compat/setproctitle.$(OBJEXT): compat/$(am__dirstamp) \
 	compat/$(DEPDIR)/$(am__dirstamp)
 compat/setenv.$(OBJEXT): compat/$(am__dirstamp) \
 	compat/$(DEPDIR)/$(am__dirstamp)
@@ -833,11 +845,13 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@compat/$(DEPDIR)/forkpty-@PLATFORM@.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compat/$(DEPDIR)/fparseln.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compat/$(DEPDIR)/getopt.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@compat/$(DEPDIR)/getprogname.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compat/$(DEPDIR)/imsg-buffer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compat/$(DEPDIR)/imsg.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compat/$(DEPDIR)/openat.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compat/$(DEPDIR)/reallocarray.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compat/$(DEPDIR)/setenv.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@compat/$(DEPDIR)/setproctitle.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compat/$(DEPDIR)/strcasestr.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compat/$(DEPDIR)/strlcat.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compat/$(DEPDIR)/strlcpy.Po@am__quote@
