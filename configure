@@ -672,6 +672,10 @@ NO_STRLCPY_FALSE
 NO_STRLCPY_TRUE
 NO_SETENV_FALSE
 NO_SETENV_TRUE
+NO_SETPROCTITLE_FALSE
+NO_SETPROCTITLE_TRUE
+NO_GETPROGNAME_FALSE
+NO_GETPROGNAME_TRUE
 NO_DAEMON_FALSE
 NO_DAEMON_TRUE
 NO_CLOSEFROM_FALSE
@@ -693,6 +697,8 @@ IS_SUNCC_FALSE
 IS_SUNCC_TRUE
 IS_GCC_FALSE
 IS_GCC_TRUE
+IS_PROFILE_FALSE
+IS_PROFILE_TRUE
 IS_COVERAGE_FALSE
 IS_COVERAGE_TRUE
 IS_DEBUG_FALSE
@@ -801,6 +807,7 @@ enable_silent_rules
 enable_dependency_tracking
 enable_debug
 enable_coverage
+enable_profile
 enable_static
 enable_utempter
 '
@@ -1457,6 +1464,7 @@ Optional Features:
                           speeds up one-time build
   --enable-debug          enable debug build flags
   --enable-coverage       enable coverage build flags
+  --enable-profile        enable profile build flags
   --enable-static         create a static build
   --enable-utempter       use utempter if it is installed
 
@@ -4461,6 +4469,22 @@ else
 fi
 
 
+# Is this --enable-profile?
+# Check whether --enable-profile was given.
+if test "${enable_profile+set}" = set; then :
+  enableval=$enable_profile; found_profile=$enable_profile
+
+fi
+
+ if test "x$found_profile" = xyes; then
+  IS_PROFILE_TRUE=
+  IS_PROFILE_FALSE='#'
+else
+  IS_PROFILE_TRUE='#'
+  IS_PROFILE_FALSE=
+fi
+
+
 # Is this a static build?
 # Check whether --enable-static was given.
 if test "${enable_static+set}" = set; then :
@@ -4768,7 +4792,7 @@ fi
 for ac_func in  \
 		dirfd \
 		flock \
-		setproctitle \
+		prctl \
 		sysconf \
 		cfmakeraw \
 
@@ -5811,6 +5835,48 @@ else
 fi
 
 
+# Look for getprogname, compat/getprogname.c used if missing.
+ac_fn_c_check_func "$LINENO" "getprogname" "ac_cv_func_getprogname"
+if test "x$ac_cv_func_getprogname" = xyes; then :
+  found_getprogname=yes
+else
+  found_getprogname=no
+fi
+
+if test "x$found_getprogname" = xyes; then
+	$as_echo "#define HAVE_GETPROGNAME 1" >>confdefs.h
+
+fi
+ if test "x$found_getprogname" = xno; then
+  NO_GETPROGNAME_TRUE=
+  NO_GETPROGNAME_FALSE='#'
+else
+  NO_GETPROGNAME_TRUE='#'
+  NO_GETPROGNAME_FALSE=
+fi
+
+
+# Look for setproctitle, compat/setproctitle.c used if missing.
+ac_fn_c_check_func "$LINENO" "setproctitle" "ac_cv_func_setproctitle"
+if test "x$ac_cv_func_setproctitle" = xyes; then :
+  found_setproctitle=yes
+else
+  found_setproctitle=no
+fi
+
+if test "x$found_setproctitle" = xyes; then
+	$as_echo "#define HAVE_SETPROCTITLE 1" >>confdefs.h
+
+fi
+ if test "x$found_setproctitle" = xno; then
+  NO_SETPROCTITLE_TRUE=
+  NO_SETPROCTITLE_FALSE='#'
+else
+  NO_SETPROCTITLE_TRUE='#'
+  NO_SETPROCTITLE_FALSE=
+fi
+
+
 # Look for setenv, compat/setenv.c used if missing.
 ac_fn_c_check_func "$LINENO" "setenv" "ac_cv_func_setenv"
 if test "x$ac_cv_func_setenv" = xyes; then :
@@ -6277,6 +6343,44 @@ fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 
+# Look for program_invocation_short_name.
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for program_invocation_short_name" >&5
+$as_echo_n "checking for program_invocation_short_name... " >&6; }
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+		#include <stdio.h>
+		#include <stdlib.h>
+		extern char *program_invocation_short_name;
+		int main(void) {
+			const char *cp = program_invocation_short_name;
+			printf("%s\n", cp);
+			exit(0);
+		}
+
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  $as_echo "#define HAVE_PROGRAM_INVOCATION_SHORT_NAME 1" >>confdefs.h
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+
+# Look for prctl(PR_SET_NAME).
+ac_fn_c_check_decl "$LINENO" "PR_SET_NAME" "ac_cv_have_decl_PR_SET_NAME" "#include <sys/prctl.h>
+
+"
+if test "x$ac_cv_have_decl_PR_SET_NAME" = xyes; then :
+  $as_echo "#define HAVE_PR_SET_NAME 1" >>confdefs.h
+
+fi
+
+
 # Look for fcntl(F_CLOSEM).
 ac_fn_c_check_decl "$LINENO" "F_CLOSEM" "ac_cv_have_decl_F_CLOSEM" "#include <fcntl.h>
 
@@ -6634,6 +6738,10 @@ if test -z "${IS_COVERAGE_TRUE}" && test -z "${IS_COVERAGE_FALSE}"; then
   as_fn_error $? "conditional \"IS_COVERAGE\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
+if test -z "${IS_PROFILE_TRUE}" && test -z "${IS_PROFILE_FALSE}"; then
+  as_fn_error $? "conditional \"IS_PROFILE\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
 if test -z "${IS_GCC_TRUE}" && test -z "${IS_GCC_FALSE}"; then
   as_fn_error $? "conditional \"IS_GCC\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
@@ -6664,6 +6772,14 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${NO_DAEMON_TRUE}" && test -z "${NO_DAEMON_FALSE}"; then
   as_fn_error $? "conditional \"NO_DAEMON\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${NO_GETPROGNAME_TRUE}" && test -z "${NO_GETPROGNAME_FALSE}"; then
+  as_fn_error $? "conditional \"NO_GETPROGNAME\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${NO_SETPROCTITLE_TRUE}" && test -z "${NO_SETPROCTITLE_FALSE}"; then
+  as_fn_error $? "conditional \"NO_SETPROCTITLE\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${NO_SETENV_TRUE}" && test -z "${NO_SETENV_FALSE}"; then
