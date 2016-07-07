@@ -129,7 +129,7 @@ bin_PROGRAMS = tmux$(EXEEXT)
 @NO_FORKPTY_TRUE@am__append_14 = compat/forkpty-@PLATFORM@.c
 @NO_IMSG_TRUE@am__append_15 = compat/imsg.c compat/imsg-buffer.c
 @NO_CLOSEFROM_TRUE@am__append_16 = compat/closefrom.c
-@NO_DAEMON_TRUE@am__append_17 = compat/daemon.c compat/daemon.c
+@NO_DAEMON_TRUE@am__append_17 = compat/daemon.c
 @NO_GETPROGNAME_TRUE@am__append_18 = compat/getprogname.c
 @NO_SETPROCTITLE_TRUE@am__append_19 = compat/setproctitle.c
 @NO_SETENV_TRUE@am__append_20 = compat/setenv.c
@@ -217,8 +217,7 @@ am__dirstamp = $(am__leading_dot)dirstamp
 @NO_IMSG_TRUE@am__objects_2 = compat/imsg.$(OBJEXT) \
 @NO_IMSG_TRUE@	compat/imsg-buffer.$(OBJEXT)
 @NO_CLOSEFROM_TRUE@am__objects_3 = compat/closefrom.$(OBJEXT)
-@NO_DAEMON_TRUE@am__objects_4 = compat/daemon.$(OBJEXT) \
-@NO_DAEMON_TRUE@	compat/daemon.$(OBJEXT)
+@NO_DAEMON_TRUE@am__objects_4 = compat/daemon.$(OBJEXT)
 @NO_GETPROGNAME_TRUE@am__objects_5 = compat/getprogname.$(OBJEXT)
 @NO_SETPROCTITLE_TRUE@am__objects_6 = compat/setproctitle.$(OBJEXT)
 @NO_SETENV_TRUE@am__objects_7 = compat/setenv.$(OBJEXT)
