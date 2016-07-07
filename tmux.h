@@ -644,6 +644,7 @@ enum utf8_state {
 #define GRID_FLAG_EXTENDED 0x8
 #define GRID_FLAG_FGRGB 0x10
 #define GRID_FLAG_BGRGB 0x20
+#define GRID_FLAG_SELECTED 0x40
 
 /* Grid line flags. */
 #define GRID_LINE_WRAPPED 0x1
@@ -824,6 +825,7 @@ struct window_mode {
 	void	(*key)(struct window_pane *, struct client *, struct session *,
 		    key_code, struct mouse_event *);
 };
+#define WINDOW_MODE_TIMEOUT 180
 
 /* Structures for choose mode. */
 struct window_choose_data {
@@ -906,6 +908,8 @@ struct window_pane {
 
 	const struct window_mode *mode;
 	void		*modedata;
+	struct event	 modetimer;
+	time_t		 modelast;
 
 	TAILQ_ENTRY(window_pane) entry;
 	RB_ENTRY(window_pane) tree_entry;
@@ -945,9 +949,13 @@ struct window {
 #define WINDOW_ZOOMED 0x1000
 #define WINDOW_FORCEWIDTH 0x2000
 #define WINDOW_FORCEHEIGHT 0x4000
+#define WINDOW_STYLECHANGED 0x8000
 #define WINDOW_ALERTFLAGS (WINDOW_BELL|WINDOW_ACTIVITY|WINDOW_SILENCE)
 
 	struct options	*options;
+
+	struct grid_cell style;
+	struct grid_cell active_style;
 
 	u_int		 references;
 
@@ -1271,6 +1279,8 @@ struct client {
 	struct key_table *keytable;
 
 	struct event	 identify_timer;
+	void		(*identify_callback)(struct client *, struct window_pane *);
+	void		*identify_callback_data;
 
 	char		*message_string;
 	struct event	 message_timer;
@@ -1931,7 +1941,7 @@ void	 server_destroy_session_group(struct session *);
 void	 server_destroy_session(struct session *);
 void	 server_check_unattached(void);
 void	 server_set_identify(struct client *);
-void	 server_clear_identify(struct client *);
+void	 server_clear_identify(struct client *, struct window_pane *);
 int	 server_set_stdin_callback(struct client *, void (*)(struct client *,
 	     int, void *), void *, char **);
 void	 server_unzoom_window(struct window *);
@@ -2128,7 +2138,8 @@ int		 window_has_pane(struct window *, struct window_pane *);
 int		 window_set_active_pane(struct window *, struct window_pane *);
 void		 window_redraw_active_switch(struct window *,
 		     struct window_pane *);
-struct window_pane *window_add_pane(struct window *, u_int);
+struct window_pane *window_add_pane(struct window *, struct window_pane *,
+		     u_int);
 void		 window_resize(struct window *, u_int, u_int);
 int		 window_zoom(struct window_pane *);
 int		 window_unzoom(struct window *);
