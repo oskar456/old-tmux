@@ -687,6 +687,8 @@ NO_IMSG_TRUE
 XOPEN_DEFINES
 NO_B64_NTOP_FALSE
 NO_B64_NTOP_TRUE
+HAVE_UTF8PROC_FALSE
+HAVE_UTF8PROC_TRUE
 LIBNCURSES_LIBS
 LIBNCURSES_CFLAGS
 LIBEVENT_LIBS
@@ -810,6 +812,7 @@ enable_coverage
 enable_profile
 enable_static
 enable_utempter
+enable_utf8proc
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1467,6 +1470,7 @@ Optional Features:
   --enable-profile        enable profile build flags
   --enable-static         create a static build
   --enable-utempter       use utempter if it is installed
+  --enable-utf8proc       use utf8proc if it is installed
 
 Some influential environment variables:
   CC          C compiler command
@@ -4700,12 +4704,10 @@ done
 
 for ac_header in  \
 		bitstring.h \
-		curses.h \
 		dirent.h \
 		fcntl.h \
 		inttypes.h \
 		libutil.h \
-		ncurses.h \
 		ndir.h \
 		paths.h \
 		pty.h \
@@ -5065,11 +5067,20 @@ $as_echo "yes" >&6; }
 		found_libevent=yes
 
 fi
+ac_fn_c_check_header_mongrel "$LINENO" "event.h" "ac_cv_header_event_h" "$ac_includes_default"
+if test "x$ac_cv_header_event_h" = xyes; then :
+
+else
+  found_libevent=no
+
+fi
+
+
 if test "x$found_libevent" = xno; then
 	as_fn_error $? "\"libevent not found\"" "$LINENO" 5
 fi
 
-# Look for ncurses
+# Look for ncurses.
 
 pkg_failed=no
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for LIBNCURSES" >&5
@@ -5267,6 +5278,25 @@ $as_echo "yes" >&6; }
 		found_curses=yes
 
 fi
+ac_fn_c_check_header_mongrel "$LINENO" "ncurses.h" "ac_cv_header_ncurses_h" "$ac_includes_default"
+if test "x$ac_cv_header_ncurses_h" = xyes; then :
+  $as_echo "#define HAVE_NCURSES_H 1" >>confdefs.h
+
+else
+  ac_fn_c_check_header_mongrel "$LINENO" "curses.h" "ac_cv_header_curses_h" "$ac_includes_default"
+if test "x$ac_cv_header_curses_h" = xyes; then :
+  $as_echo "#define HAVE_CURSES_H 1" >>confdefs.h
+
+else
+  found_curses=no
+
+fi
+
+
+
+fi
+
+
 if test "x$found_curses" = xno; then
 	as_fn_error $? "\"curses not found\"" "$LINENO" 5
 fi
@@ -5355,6 +5385,99 @@ fi
 		fi
 	fi
 fi
+
+# Look for utf8proc.
+# Check whether --enable-utf8proc was given.
+if test "${enable_utf8proc+set}" = set; then :
+  enableval=$enable_utf8proc; found_utf8proc=$enable_utf8proc
+else
+  found_utf8proc=yes
+
+fi
+
+if test "x$found_utf8proc" = xyes; then
+	ac_fn_c_check_header_mongrel "$LINENO" "utf8proc.h" "ac_cv_header_utf8proc_h" "$ac_includes_default"
+if test "x$ac_cv_header_utf8proc_h" = xyes; then :
+  found_utf8proc=yes
+else
+  found_utf8proc=no
+fi
+
+
+	if test "x$found_utf8proc" = xyes; then
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing utf8proc_charwidth" >&5
+$as_echo_n "checking for library containing utf8proc_charwidth... " >&6; }
+if ${ac_cv_search_utf8proc_charwidth+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_func_search_save_LIBS=$LIBS
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char utf8proc_charwidth ();
+int
+main ()
+{
+return utf8proc_charwidth ();
+  ;
+  return 0;
+}
+_ACEOF
+for ac_lib in '' utf8proc; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_search_utf8proc_charwidth=$ac_res
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext
+  if ${ac_cv_search_utf8proc_charwidth+:} false; then :
+  break
+fi
+done
+if ${ac_cv_search_utf8proc_charwidth+:} false; then :
+
+else
+  ac_cv_search_utf8proc_charwidth=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_utf8proc_charwidth" >&5
+$as_echo "$ac_cv_search_utf8proc_charwidth" >&6; }
+ac_res=$ac_cv_search_utf8proc_charwidth
+if test "$ac_res" != no; then :
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
+  found_utf8proc=yes
+else
+  found_utf8proc=no
+
+fi
+
+		if test "x$found_utf8proc" = xyes; then
+			$as_echo "#define HAVE_UTF8PROC 1" >>confdefs.h
+
+		fi
+	fi
+fi
+ if test "x$found_utf8proc" = xyes; then
+  HAVE_UTF8PROC_TRUE=
+  HAVE_UTF8PROC_FALSE='#'
+else
+  HAVE_UTF8PROC_TRUE='#'
+  HAVE_UTF8PROC_FALSE=
+fi
+
 
 # Check for b64_ntop.
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for b64_ntop" >&5
@@ -6752,6 +6875,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${IS_GLIBC_TRUE}" && test -z "${IS_GLIBC_FALSE}"; then
   as_fn_error $? "conditional \"IS_GLIBC\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${HAVE_UTF8PROC_TRUE}" && test -z "${HAVE_UTF8PROC_FALSE}"; then
+  as_fn_error $? "conditional \"HAVE_UTF8PROC\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${NO_B64_NTOP_TRUE}" && test -z "${NO_B64_NTOP_FALSE}"; then

@@ -991,7 +991,7 @@ bind-key -Troot   a switch-client -Ttable1
 .Sh WINDOWS AND PANES
 A
 .Nm
-window may be in one of several modes.
+window may be in one of two modes.
 The default permits direct access to the terminal attached to the window.
 The other is copy mode, which permits a section of a window or its
 history to be copied to a
@@ -3805,9 +3805,7 @@ Before the command is executed, the first occurrence of the string
 .Ql %%
 and all occurrences of
 .Ql %1
-are replaced by the response to the first prompt, the second
-.Ql %%
-and all
+are replaced by the response to the first prompt, all
 .Ql %2
 are replaced with the response to the second prompt, and so on for further
 prompts.
@@ -3880,7 +3878,7 @@ and so on.
 When the
 .Ic buffer-limit
 option is reached, the oldest automatically named buffer is deleted.
-Explicitly named are not subject to
+Explicitly named buffers are not subject to
 .Ic buffer-limit
 and may be deleted with
 .Ic delete-buffer
