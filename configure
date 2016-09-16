@@ -5140,132 +5140,12 @@ fi
 	# Put the nasty error message in config.log where it belongs
 	echo "$LIBNCURSES_PKG_ERRORS" >&5
 
-
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing setupterm" >&5
-$as_echo_n "checking for library containing setupterm... " >&6; }
-if ${ac_cv_search_setupterm+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_func_search_save_LIBS=$LIBS
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char setupterm ();
-int
-main ()
-{
-return setupterm ();
-  ;
-  return 0;
-}
-_ACEOF
-for ac_lib in '' ncurses curses terminfo; do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_search_setupterm=$ac_res
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext
-  if ${ac_cv_search_setupterm+:} false; then :
-  break
-fi
-done
-if ${ac_cv_search_setupterm+:} false; then :
-
-else
-  ac_cv_search_setupterm=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_setupterm" >&5
-$as_echo "$ac_cv_search_setupterm" >&6; }
-ac_res=$ac_cv_search_setupterm
-if test "$ac_res" != no; then :
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-  found_curses=yes
-else
-  found_curses=no
-
-fi
-
-
+	found_ncurses=no
 
 elif test $pkg_failed = untried; then
      	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing setupterm" >&5
-$as_echo_n "checking for library containing setupterm... " >&6; }
-if ${ac_cv_search_setupterm+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_func_search_save_LIBS=$LIBS
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char setupterm ();
-int
-main ()
-{
-return setupterm ();
-  ;
-  return 0;
-}
-_ACEOF
-for ac_lib in '' ncurses curses terminfo; do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_search_setupterm=$ac_res
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext
-  if ${ac_cv_search_setupterm+:} false; then :
-  break
-fi
-done
-if ${ac_cv_search_setupterm+:} false; then :
-
-else
-  ac_cv_search_setupterm=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_setupterm" >&5
-$as_echo "$ac_cv_search_setupterm" >&6; }
-ac_res=$ac_cv_search_setupterm
-if test "$ac_res" != no; then :
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-  found_curses=yes
-else
-  found_curses=no
-
-fi
-
-
+	found_ncurses=no
 
 else
 	LIBNCURSES_CFLAGS=$pkg_cv_LIBNCURSES_CFLAGS
@@ -5275,30 +5155,127 @@ $as_echo "yes" >&6; }
 
 		CPPFLAGS="$LIBNCURSES_CFLAGS $CPPFLAGS"
 		LIBS="$LIBNCURSES_LIBS $LIBS"
-		found_curses=yes
+		found_ncurses=yes
 
 fi
-ac_fn_c_check_header_mongrel "$LINENO" "ncurses.h" "ac_cv_header_ncurses_h" "$ac_includes_default"
+if test "x$found_ncurses" = xno; then
+	# pkg-config didn't work, try ncurses.
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for setupterm in -lncurses" >&5
+$as_echo_n "checking for setupterm in -lncurses... " >&6; }
+if ${ac_cv_lib_ncurses_setupterm+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lncurses  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char setupterm ();
+int
+main ()
+{
+return setupterm ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_ncurses_setupterm=yes
+else
+  ac_cv_lib_ncurses_setupterm=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_ncurses_setupterm" >&5
+$as_echo "$ac_cv_lib_ncurses_setupterm" >&6; }
+if test "x$ac_cv_lib_ncurses_setupterm" = xyes; then :
+  found_ncurses=yes
+else
+  found_ncurses=no
+
+fi
+
+	ac_fn_c_check_header_mongrel "$LINENO" "ncurses.h" "ac_cv_header_ncurses_h" "$ac_includes_default"
 if test "x$ac_cv_header_ncurses_h" = xyes; then :
-  $as_echo "#define HAVE_NCURSES_H 1" >>confdefs.h
 
 else
-  ac_fn_c_check_header_mongrel "$LINENO" "curses.h" "ac_cv_header_curses_h" "$ac_includes_default"
-if test "x$ac_cv_header_curses_h" = xyes; then :
-  $as_echo "#define HAVE_CURSES_H 1" >>confdefs.h
+  found_ncurses=no
+fi
 
+
+fi
+if test "x$found_ncurses" = xyes; then
+	LIBS="$LIBS -lncurses"
+	$as_echo "#define HAVE_NCURSES_H 1" >>confdefs.h
+
+else
+	# No ncurses, try curses.
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for setupterm in -lcurses" >&5
+$as_echo_n "checking for setupterm in -lcurses... " >&6; }
+if ${ac_cv_lib_curses_setupterm+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lcurses  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char setupterm ();
+int
+main ()
+{
+return setupterm ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_curses_setupterm=yes
+else
+  ac_cv_lib_curses_setupterm=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_curses_setupterm" >&5
+$as_echo "$ac_cv_lib_curses_setupterm" >&6; }
+if test "x$ac_cv_lib_curses_setupterm" = xyes; then :
+  found_curses=yes
 else
   found_curses=no
 
 fi
 
+	ac_fn_c_check_header_mongrel "$LINENO" "curses.h" "ac_cv_header_curses_h" "$ac_includes_default"
+if test "x$ac_cv_header_curses_h" = xyes; then :
 
-
+else
+  found_curses=no
 fi
 
 
-if test "x$found_curses" = xno; then
-	as_fn_error $? "\"curses not found\"" "$LINENO" 5
+	if test "x$found_curses" = xyes; then
+		LIBS="$LIBS -lcurses"
+		$as_echo "#define HAVE_CURSES_H 1" >>confdefs.h
+
+	else
+		as_fn_error $? "\"curses or ncurses not found\"" "$LINENO" 5
+	fi
 fi
 
 # Look for utempter.
