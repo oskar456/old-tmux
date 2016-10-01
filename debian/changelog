@@ -1,3 +1,40 @@
+tmux (2.3~git20160916-1) experimental; urgency=medium
+
+  * New upstream snapshot, from Git commit 895f1d93d5.
+
+ -- Romain Francoise <rfrancoise@debian.org>  Fri, 16 Sep 2016 19:22:25 +0200
+
+tmux (2.3~git20160903-1) experimental; urgency=medium
+
+  * New upstream snapshot, from Git commit 999c1c771b.
+
+ -- Romain Francoise <rfrancoise@debian.org>  Sat, 03 Sep 2016 16:16:49 +0200
+
+tmux (2.3~git20160707-1) experimental; urgency=medium
+
+  * New upstream snapshot, from Git commit 2d843b5021.
+
+ -- Romain Francoise <rfrancoise@debian.org>  Thu, 07 Jul 2016 19:29:50 +0200
+
+tmux (2.3~git20160529-1) experimental; urgency=medium
+
+  * New upstream snapshot, from Git commit 7a2fed494b.
+
+ -- Romain Francoise <rfrancoise@debian.org>  Sun, 29 May 2016 19:42:51 +0200
+
+tmux (2.3~git20160512-1) experimental; urgency=medium
+
+  * New upstream snapshot, from Git commit 6cb74f4b7d (closes: #823527).
+
+ -- Romain Francoise <rfrancoise@debian.org>  Thu, 12 May 2016 19:36:29 +0200
+
+tmux (2.3~git20160506-1) experimental; urgency=medium
+
+  * New upstream snapshot, from Git commit fe4e9470bb.
+  * Bump Standards-Version to 3.9.8.
+
+ -- Romain Francoise <rfrancoise@debian.org>  Fri, 06 May 2016 17:20:30 +0200
+
 tmux (2.2-3) unstable; urgency=medium
 
   * Cherry-pick commit 7411f21c5f from upstream to restore the correct

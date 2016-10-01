@@ -60,4 +60,4 @@ Forwarded: not-needed
 +
  #ifndef HAVE_CLOSEFROM
  /* closefrom.c */
- void	closefrom(int);
+ void		 closefrom(int);
