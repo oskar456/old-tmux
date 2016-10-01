@@ -1,3 +1,9 @@
+tmux (2.3-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Romain Francoise <rfrancoise@debian.org>  Sat, 01 Oct 2016 12:00:58 +0200
+
 tmux (2.3~git20160916-1) experimental; urgency=medium
 
   * New upstream snapshot, from Git commit 895f1d93d5.
