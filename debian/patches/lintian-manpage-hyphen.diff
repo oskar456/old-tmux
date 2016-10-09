@@ -55,7 +55,7 @@ Forwarded: not-needed
  .Ed
  .Sh CLIENTS AND SESSIONS
  The
-@@ -1131,8 +1131,8 @@
+@@ -1141,8 +1141,8 @@
  .Pa /tmp
  as well as the paste buffer:
  .Bd -literal -offset indent
@@ -66,7 +66,7 @@ Forwarded: not-needed
  .Ed
  .Pp
  The paste buffer key pastes the first line from the top paste buffer on the
-@@ -1333,7 +1333,7 @@
+@@ -1343,7 +1343,7 @@
  and the result executed as a command.
  If
  .Ar template
@@ -75,7 +75,7 @@ Forwarded: not-needed
  For the meaning of the
  .Fl F
  flag, see the
-@@ -1355,7 +1355,7 @@
+@@ -1365,7 +1365,7 @@
  and the result executed as a command.
  If
  .Ar template
@@ -84,7 +84,7 @@ Forwarded: not-needed
  For the meaning of the
  .Fl F
  flag, see the
-@@ -1402,7 +1402,7 @@
+@@ -1412,7 +1412,7 @@
  Note that
  .Ql %%
  can be used and will be replaced with the session name.
@@ -93,7 +93,7 @@ Forwarded: not-needed
  If
  .Fl c
  is given, will override the default window command.
-@@ -1445,7 +1445,7 @@
+@@ -1455,7 +1455,7 @@
  and the result executed as a command.
  If
  .Ar template
@@ -102,7 +102,7 @@ Forwarded: not-needed
  For the meaning of the
  .Fl F
  flag, see the
-@@ -1767,7 +1767,7 @@
+@@ -1788,7 +1788,7 @@
  option only opens a new pipe if no previous pipe exists, allowing a pipe to
  be toggled with a single key, for example:
  .Bd -literal -offset indent
@@ -111,7 +111,7 @@ Forwarded: not-needed
  .Ed
  .It Xo Ic previous-layout
  .Op Fl t Ar target-window
-@@ -2309,8 +2309,8 @@
+@@ -2346,8 +2346,8 @@
  and be set to any string.
  For example:
  .Bd -literal -offset indent
@@ -122,7 +122,7 @@ Forwarded: not-needed
  abc123
  .Ed
  .Pp
-@@ -2353,16 +2353,16 @@
+@@ -2390,16 +2390,16 @@
  is appended to the existing setting.
  For example:
  .Bd -literal -offset indent
@@ -143,7 +143,7 @@ Forwarded: not-needed
  .Ed
  .Pp
  Will result in a red background
-@@ -2793,7 +2793,7 @@
+@@ -2830,7 +2830,7 @@
  Examples are:
  .Bd -literal -offset indent
  #(sysctl vm.loadavg)
@@ -152,7 +152,7 @@ Forwarded: not-needed
  .Ed
  .Pp
  The default is
-@@ -2961,7 +2961,7 @@
+@@ -2998,7 +2998,7 @@
  or with a terminal escape sequence.
  It may be switched off globally with:
  .Bd -literal -offset indent
@@ -161,7 +161,7 @@ Forwarded: not-needed
  .Ed
  .Pp
  .It Ic automatic-rename-format Ar format
-@@ -3897,7 +3897,7 @@
+@@ -3936,7 +3936,7 @@
  and the result executed as a command.
  If
  .Ar template
@@ -170,7 +170,7 @@ Forwarded: not-needed
  For the meaning of the
  .Fl F
  flag, see the
-@@ -4267,29 +4267,29 @@
+@@ -4306,29 +4306,29 @@
  .Pp
  Changing the default prefix key:
  .Bd -literal -offset indent
