@@ -1,3 +1,14 @@
+tmux (2.3-2) unstable; urgency=low
+
+  * Cherry-pick fixes from upstream Git:
+    + 30086e504c: remove wrong optimization in screen_write_copy
+    + 44449b305b: don't crash on long prompts in window_copy_write_line
+    + 48dd250af1: handle NULL window or session for user options
+    + 1db6d6fea6: pass file/line to new if-shell commands
+    + b8f2dd8237: fix redraw of pane status lines
+
+ -- Romain Francoise <rfrancoise@debian.org>  Sun, 09 Oct 2016 19:44:35 +0200
+
 tmux (2.3-1) unstable; urgency=medium
 
   * New upstream release.
