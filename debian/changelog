@@ -1,3 +1,11 @@
+tmux (2.3-3) unstable; urgency=medium
+
+  * Cherry-pick fixes from upstream Git:
+    + 4160df4ca4: redraw selection when redrawing whole pane
+    + e0add119ea: do not draw pane status if pane is not visible
+
+ -- Romain Francoise <rfrancoise@debian.org>  Fri, 14 Oct 2016 22:04:41 +0200
+
 tmux (2.3-2) unstable; urgency=low
 
   * Cherry-pick fixes from upstream Git:
