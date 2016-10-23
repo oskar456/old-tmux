@@ -1,3 +1,10 @@
+tmux (2.3-4) unstable; urgency=medium
+
+  * Cherry pick one additional fix from upstream Git:
+    + c2f88373e7: store the right size in the pipe offset for pipe-pane
+
+ -- Romain Francoise <rfrancoise@debian.org>  Sun, 23 Oct 2016 12:48:32 +0200
+
 tmux (2.3-3) unstable; urgency=medium
 
   * Cherry-pick fixes from upstream Git:
