@@ -1,30 +1,18 @@
-            - name: Build Debian packages
+            - name: Build Debian package
   # You may pin to the exact commit or the version.
-  # uses: jtdor/build-deb-action@77e660b49ec8a92ef36e28f577317e8577a10e3e
-  uses: jtdor/build-deb-action@v1.9.0
+  # uses: dawidd6/action-debian-package@c7f4c07ff6586bdc12752bb73a45203bfe25efad
+  uses: dawidd6/action-debian-package@v1.6.0
   with:
-    # Options to be passed to apt-get
-    apt-opts: # optional
-    # Directory path relative to $GITHUB_WORKSPACE to place the built packages in
-    artifacts-dir: # default is debian/artifacts
-    # Shell command(s) to execute after installing build dependencies and before executing dpkg-buildpackage
-    before-build-hook: # optional
-    # Options to be passed to dpkg-buildpackage
-    buildpackage-opts: # optional
-    # Name of a Docker image or path of a Dockerfile to use for the build container
-    docker-image: # default is debian:stable-slim
-    # Extra packages to be installed as build dependencies
-    extra-build-deps: # optional
-    # Additional arguments to 'docker run' when starting the build container
-    extra-docker-args: # optional
-    # Extra ASCII-armored APT repository keys or paths to keyring files to trust in the build environment
-    extra-repo-keys: # optional
-    # Extra APT repositories to configure in the build environment (one-line-style or deb822-style format)
-    extra-repos: # optional
-    # Foreign architecture to setup cross-building for
-    host-arch: # optional
-    # Shell command(s) to execute after setting-up the build environment and before installing build dependencies
-    setup-hook: # optional
-    # Path relative to $GITHUB_WORKSPACE that contains the package sources
-    source-dir: # default is ./
+    # Target CPU architecture (amd64, arm64, arm, ...)
+    cpu_architecture: # optional, default is amd64
+    # Directory where Debian sources are, relative to workspace
+    source_directory: # optional, default is ./
+    # Directory where build artifacts will be placed, relative to workspace
+    artifacts_directory: # optional, default is ./
+    # OS distribution name, value from `debian/changelog` is used if not defined
+    os_distribution: # optional
+    # Command line parameters provided to 'lintian'
+    lintian_opts: # optional, default is 
+    # Run lintian checks
+    lintian_run: # optional
           
