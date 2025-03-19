@@ -1,4 +1,4 @@
-    - name: Build Debian packages
+- name: Build Debian packages
   # You may pin to the exact commit or the version.
   # uses: jtdor/build-deb-action@77e660b49ec8a92ef36e28f577317e8577a10e3e
   uses: jtdor/build-deb-action@v1.9.0
